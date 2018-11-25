@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.tausi.everypad.R;
 import com.example.tausi.everypad.model.Note;
+import com.example.tausi.everypad.utils.NoteUtils;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder>{
         Note note = getNote(position);
         if (note != null){
             holder.noteText.setText(note.getNoteText());
-            holder.noteDate.setText();
+            holder.noteDate.setText(NoteUtils.dateFromLong(note.getNoteDate()));
         }
     }
 
