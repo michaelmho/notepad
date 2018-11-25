@@ -51,6 +51,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder>{
         TextView noteText, noteDate;
 
         public NoteHolder(View itemView) {
+
             super(itemView);
         }
     }
