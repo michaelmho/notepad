@@ -1,5 +1,6 @@
 package com.example.tausi.everypad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,15 +13,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.tausi.everypad.adapters.NotesAdapter;
+import com.example.tausi.everypad.db.NoteDao;
+import com.example.tausi.everypad.db.NotesDB;
 import com.example.tausi.everypad.model.Note;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Note> notes;
     private NotesAdapter adapter;
+    private NoteDao dao;
 
 
     @Override
@@ -43,25 +48,23 @@ public class MainActivity extends AppCompatActivity {
                 onAddNewNote();
             }
         });
+
+        dao = NotesDB.getInstance(this).noteDao();
     }
 
     private void loadNotes() {
         this.notes = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            notes.add(new Note("Hello im here"
-            ,
-                    new Date().getTime()));
-        }
-        adapter = new NotesAdapter(this, notes);
-        recyclerView.setAdapter(adapter);
+        List<Note> list = dao.getNotes();//get All notes from DataBases
+        this.notes.addAll(list);
+        this.adapter = new NotesAdapter(this, this.notes);
+        this.recyclerView.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
     }
 
     private void onAddNewNote() {
-        if (notes != null)
-            notes.add(new Note("this is another nrw one", new Date().getTime()));
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
+        // TODO: tomot
+        startActivity(new Intent(this,EditeNoteActivity.class));
+
     }
 
     @Override
