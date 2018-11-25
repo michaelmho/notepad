@@ -13,14 +13,23 @@ import com.example.tausi.everypad.model.Note;
 import java.util.Date;
 
 public class EditeNoteActivity extends AppCompatActivity {
-private EditText inputNote;
-private NoteDao dao;
+    private EditText inputNote;
+    private NoteDao dao;
+    private Note temp;
+    public static final String NOTE_EXTRA_Key="note_id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edite_note);
         inputNote=findViewById(R.id.input_note);
         dao = NotesDB.getInstance(this).noteDao();
+        if (getIntent().getExtras() != null){
+            int id = getIntent().getExtras().getInt(NOTE_EXTRA_Key, 0);
+            temp = dao.getNoteById(id);
+            inputNote.setText(temp.getNoteText());
+        } else temp = new Note();
+
     }
 
     @Override
@@ -42,8 +51,15 @@ private NoteDao dao;
         String text = inputNote.getText().toString();
         if (!text.isEmpty()) {
             long date = new Date().getTime(); // get current system time
-            Note note = new Note(text, date); // create new note
-            dao.insertNote(note); // insert and save
+
+            // if note exist update else craete new
+
+            temp.setNoteDate(date);
+            temp.setNoteText(text);
+
+            if (temp.getId()==-1)
+                dao.insertNote(temp); // insert and save
+            else dao.updateNote(temp);
 
             finish(); //return to the MainActivity
         }

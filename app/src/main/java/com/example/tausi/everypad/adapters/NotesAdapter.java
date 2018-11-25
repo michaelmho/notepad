@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tausi.everypad.R;
+import com.example.tausi.everypad.callbacks.NoteEventListner;
 import com.example.tausi.everypad.model.Note;
 import com.example.tausi.everypad.utils.NoteUtils;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder>{
     private Context context;
     private ArrayList<Note> notes;
-
+    private NoteEventListner listner;
     public NotesAdapter(Context context, ArrayList<Note> notes) {
         this.context = context;
         this.notes = notes;
@@ -32,10 +33,27 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder>{
 
     @Override
     public void onBindViewHolder(NoteHolder holder, int position) {
-        Note note = getNote(position);
+        final Note note = getNote(position);
         if (note != null){
             holder.noteText.setText(note.getNoteText());
             holder.noteDate.setText(NoteUtils.dateFromLong(note.getNoteDate()));
+            // init note click event
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listner.onNoteClick(note);
+                }
+            });
+
+            // init from long click
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listner.onNoteLongClick(note);
+                    return false;
+                }
+            });
+
         }
     }
 
@@ -59,4 +77,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder>{
         }
     }
 
+    public void setListner(NoteEventListner listner) {
+        this.listner = listner;
+    }
 }
