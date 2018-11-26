@@ -21,6 +21,7 @@ import com.example.tausi.everypad.callbacks.NoteEventListner;
 import com.example.tausi.everypad.db.NoteDao;
 import com.example.tausi.everypad.db.NotesDB;
 import com.example.tausi.everypad.model.Note;
+import com.example.tausi.everypad.utils.NoteUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -141,6 +142,11 @@ public class MainActivity extends AppCompatActivity implements NoteEventListner 
                         //TODO share note text
                         Intent share = new Intent(Intent.ACTION_SEND);
                         // logic to share
+                        String text = note.getNoteText()+"\n Create on :"+
+                                NoteUtils.dateFromLong(note.getNoteDate());
+                        share.setType("text/plain");
+                        share.putExtra(Intent.EXTRA_TEXT,text);
+                        startActivity(share);
                     }
                 })
                 .create()
