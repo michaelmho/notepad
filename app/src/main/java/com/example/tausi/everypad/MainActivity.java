@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListner 
                         Intent share = new Intent(Intent.ACTION_SEND);
                         // logic to share
                         String text = note.getNoteText()+"\n Create on :"+
-                                NoteUtils.dateFromLong(note.getNoteDate());
+                                NoteUtils.dateFromLong(note.getNoteDate())+"By :"+getString(R.string.app_name);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT,text);
                         startActivity(share);
