@@ -1,9 +1,11 @@
 package com.example.tausi.everypad;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -113,9 +115,38 @@ public class MainActivity extends AppCompatActivity implements NoteEventListner 
     }
 
     @Override
-    public void onNoteLongClick(Note note) {
+    public void onNoteLongClick(final Note note) {
         // TODO delete share
 
-        Log.d(TAG, "onNoteLongClick: " +note.getId());
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.app_name)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO delete Note
+                        dao.deleteNote(note); // delete
+                        loadNotes(); // refresh notes
+
+                    }
+                })
+                .setNegativeButton("Share", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO share note text
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        // logic to share
+                    }
+                })
+                .create()
+                .show();
+
+
+
     }
 }
