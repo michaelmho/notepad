@@ -10,7 +10,7 @@ import android.arch.persistence.room.Ignore;
 @Entity(tableName = "notes")
 public class Note {
     @PrimaryKey(autoGenerate = true)
-    private int id = -1; //default val
+    private int id; //default val
     @ColumnInfo(name = "text")
     private String noteText;
     @ColumnInfo(name = "date")

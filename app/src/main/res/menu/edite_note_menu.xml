@@ -6,4 +6,8 @@
         android:id="@+id/save_note"
         android:title="SAVE"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/add_image"
+        android:title="ADD IMAGE"
+        app:showAsAction="ifRoom" />
 </menu>
