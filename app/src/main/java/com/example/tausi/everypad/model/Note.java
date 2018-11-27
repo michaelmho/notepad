@@ -4,6 +4,8 @@ package com.example.tausi.everypad.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Ignore;
+
 
 @Entity(tableName = "notes")
 public class Note {
@@ -14,6 +16,8 @@ public class Note {
     @ColumnInfo(name = "date")
     private long noteDate;
 
+    @Ignore
+    private boolean checked = false;
     public Note() {
     }
 
@@ -44,6 +48,14 @@ public class Note {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     @Override
