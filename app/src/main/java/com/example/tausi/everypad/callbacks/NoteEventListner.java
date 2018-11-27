@@ -11,7 +11,7 @@ public interface NoteEventListner {
     void onNoteClick(Note note);
 
     /**
-     * call wen long Click to note.
+     * call when long pressed note.
      *
      * @param note : item
      */

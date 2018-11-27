@@ -22,7 +22,7 @@ public class EditeNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edite_note);
-        inputNote=findViewById(R.id.input_note);
+        inputNote = findViewById(R.id.input_note);
         dao = NotesDB.getInstance(this).noteDao();
         if (getIntent().getExtras() != null){
             int id = getIntent().getExtras().getInt(NOTE_EXTRA_Key, 0);
@@ -37,7 +37,6 @@ public class EditeNoteActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.edite_note_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
