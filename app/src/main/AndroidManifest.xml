@@ -20,7 +20,9 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".CreatePasswordActivity" />
         <activity android:name=".EnterPasswordActivity" />
-        <activity android:name=".SplashActivity">
+        <activity
+                android:name=".SplashActivity"
+                android:theme="@style/AppTheme.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
