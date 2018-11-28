@@ -5,9 +5,17 @@
     <item
         android:id="@+id/save_note"
         android:title="SAVE"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/add_image"
         android:title="ADD IMAGE"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/add_vn"
+        android:title="ADD VOICE NOTE"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/add_reminder"
+        android:title="ADD REMINDER"
+        app:showAsAction="never" />
 </menu>

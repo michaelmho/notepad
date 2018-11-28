@@ -1,7 +1,10 @@
 package com.example.tausi.everypad;
 
+
+import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,12 +13,15 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.content.Context;
+
 
 import com.example.tausi.everypad.db.NoteDao;
 import com.example.tausi.everypad.db.NotesDB;
 import com.example.tausi.everypad.model.Note;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class EditeNoteActivity extends AppCompatActivity {
@@ -27,6 +33,7 @@ public class EditeNoteActivity extends AppCompatActivity {
     private EditText inputNote;
     private NoteDao dao;
     private Note temp;
+    public static Context context;
     public static final String NOTE_EXTRA_Key="note_id";
 
     @Override
@@ -42,7 +49,6 @@ public class EditeNoteActivity extends AppCompatActivity {
             temp = dao.getNoteById(id);
             inputNote.setText(temp.getNoteText());
         }
-
     }
 
     @Override
@@ -57,6 +63,10 @@ public class EditeNoteActivity extends AppCompatActivity {
             onSaveNote();
         if (id==R.id.add_image)
             addImageNote();
+        /*if (id==R.id.add_vn)
+            addVoiceNote();*/
+        if (id==R.id.add_reminder)
+            do_reminder();
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,15 +94,23 @@ public class EditeNoteActivity extends AppCompatActivity {
             finish(); //return to the MainActivity
         }
     }
+
     private void addImageNote(){
         openGallery();
+    }
 
+    private void do_reminder(){
+        Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+        builder.appendPath("time");
+        ContentUris.appendId(builder, Calendar.getInstance().getTimeInMillis());
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setData(builder.build());
+        startActivity(intent);
     }
 
     private void openGallery(){
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
-
     }
 
     @Override
